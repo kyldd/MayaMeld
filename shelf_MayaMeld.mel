@@ -1,0 +1,739 @@
+global proc shelf_MayaMeld () {
+    global string $gBuffStr;
+    global string $gBuffStr0;
+    global string $gBuffStr1;
+
+
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 1
+        -flexibleWidthValue 32
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "if ( `window -exists myWindow` ) {\n    deleteUI myWindow;\n}\n\n\nwindow -widthHeight 300 300 -title \"Witczer's essentials v.1.0\" -resizeToFitChildren 1 myWindow;\n\nstring $cH1 = `columnLayout -adj true`;\n\nframeLayout -label \"Smoothing\" -bs \"etchedIn\" -cll 1 -cl 0;\ngridLayout -nc 3 -cwh 120 90;\niconTextButton -style \"iconAndTextVertical\" -image1 \"polyHardEdge.png\" -label \"Harden Edge\" -c \"HardenEdge;\";\niconTextButton -style \"iconAndTextVertical\" -image1 \"polySoftEdge.png\" -label \"Soften Edge\" -c \"SoftenEdge;\";\niconTextButton -style \"iconAndTextVertical\" -image1 \"polyNormalSetToFace.png\" -label \"Set to Face\" -c \"SetFace;\";\niconTextButton -style \"iconAndTextVertical\" -image1 \"polyNormalUnlock.png\" -label \"Unlock Normals\" -c \"UnlockNormals;\";\n\nsetParent $cH1;\n\n\nframeLayout -label \"Ngons and Cleanup\" -bs \"etchedIn\" -cll 1 -cl 0;\ngridLayout -nc 3 -cwh 120 90;\niconTextButton -style \"iconAndTextVertical\" -image1 \"polyCleanup.png\" -label \"Check Ngons\" -c \"CHgon;\";\niconTextButton -style \"iconAndTextVertical\" -image1 \"polyCleanup.png\" -label \"Cleanup\" -c \"CNgon;\";\niconTextButton -style \"iconAndTextVertical\" -image1 \"polyQuad.png\" -label \"Quadrangulate\" -c \"PQuad;\";\niconTextButton -style \"iconAndTextVertical\" -image1 \"CenterPivot.png\" -label \"Center Pivot\" -c \"CPivot;\";\niconTextButton -style \"iconAndTextVertical\" -image1 \"DeleteHistory.png\" -label \"Delete History\" -c \"DHist;\";\n\nsetParent  $cH1;\n\n\n\n//.... First Panel ....//\n\nglobal proc HardenEdge()\n{\n    SoftPolyEdgeElements 0;\n}\nglobal proc SoftenEdge()\n{\n    SoftPolyEdgeElements 1;\n}\nglobal proc SetFace()\n{\n    polySetToFaceNormal;\n}\n\nglobal proc UnlockNormals()\n{\n    polyNormalPerVertex -ufn true;\n}\n\n\n\n//.... Second Panel ....//\n\nglobal proc CHgon()\n{\n    polyCleanupArgList 4 { \"0\",\"2\",\"1\",\"0\",\"1\",\"0\",\"0\",\"0\",\"0\",\"1e-05\",\"0\",\"1e-05\",\"0\",\"1e-05\",\"0\",\"-1\",\"0\",\"0\" };\n}\nglobal proc CNgon()\n{\n    polyCleanupArgList 4 { \"0\",\"1\",\"1\",\"0\",\"1\",\"0\",\"0\",\"0\",\"0\",\"1e-05\",\"0\",\"1e-05\",\"0\",\"1e-05\",\"0\",\"-1\",\"0\",\"0\" };\n}\nglobal proc PQuad()\n{\n    polyPerformAction \"polyQuad  -a 30 -kgb 1 -ktb 1 -khe 0 -ws 1\" f 0;\n}\nglobal proc CPivot()\n{\n    CenterPivot;\n}\nglobal proc DHist()\n{\n    DeleteAllHistory;\n}\n\n\nshowWindow myWindow;" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "PolyWiz" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "PolyWiz" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "if ( `window -exists myWindow` ) {\n    deleteUI myWindow;\n}\n\n\nwindow -widthHeight 300 300 -title \"PolyWiz v.1.0\" -resizeToFitChildren 1 -backgroundColor 0.15 0.15 0.15 myWindow;\n\nstring $cH1 = `columnLayout -adj true`;\nstring $cH2 = `columnLayout -adj true`;\n\nframeLayout -label \"Smoothing\" -bs \"etchedIn\" -cll 1 -cl 0 -bgc 0.5 0.25 0.65;\ngridLayout -nc 3 -cwh 120 90;\niconTextButton -style \"iconAndTextVertical\" -image1 \"polyHardEdge.png\" -label \"Harden Edge\" -c \"HardenEdge;\";\niconTextButton -style \"iconAndTextVertical\" -image1 \"polySoftEdge.png\" -label \"Soften Edge\" -c \"SoftenEdge;\";\niconTextButton -style \"iconAndTextVertical\" -image1 \"polyNormalSetToFace.png\" -label \"Set to Face\" -c \"SetFace;\";\niconTextButton -style \"iconAndTextVertical\" -image1 \"polyNormalUnlock.png\" -label \"Unlock Normals\" -c \"UnlockNormals;\";\n\nsetParent $cH1;\n\nframeLayout -label \"Ngons and Cleanup\" -bs \"etchedIn\" -cll 1 -cl 0 -bgc 0.5 0.25 0.65;\ngridLayout -nc 3 -cwh 120 90;\niconTextButton -style \"iconAndTextVertical\" -image1 \"polyCleanup.png\" -label \"Check Ngons\" -c \"CHgon;\";\niconTextButton -style \"iconAndTextVertical\" -image1 \"polyCleanup.png\" -label \"Cleanup\" -c \"CNgon;\";\niconTextButton -style \"iconAndTextVertical\" -image1 \"polyQuad.png\" -label \"Quadrangulate\" -c \"PQuad;\";\niconTextButton -style \"iconAndTextVertical\" -image1 \"CenterPivot.png\" -label \"Center Pivot\" -c \"CPivot;\";\niconTextButton -style \"iconAndTextVertical\" -image1 \"DeleteHistory.png\" -label \"Delete History\" -c \"DHist;\";\niconTextButton -style \"iconAndTextVertical\" -image1 \"FreezeTransform.png\" -label \"Freeze Transform\" -c \"FTran;\";\n\nsetParent  $cH1;\n\nframeLayout -label \"Pivot and Geometry\" -bs \"etchedIn\" -cll 1 -cl 0 -bgc 0.5 0.25 0.65;\ngridLayout -nc 3 -cwh 120 90;\niconTextButton -style \"textOnly\" -label \"Planar\" -backgroundColor 0.15 0.15 0.15 -width 20 -c \"planar;\" -commandRepeatable 1;\n\niconTextButton -style \"textOnly\" -label \"Pivot to World Center\" -backgroundColor 0.15 0.15 0.15 -width 20 -c \"pwo;\" -commandRepeatable 1;\n\niconTextButton -style \"textOnly\" -label \"Pivot to Bottom\" -backgroundColor 0.15 0.15 0.15 -width 20 -c \"PBot;\" -commandRepeatable 1;\n\nsetParent $cH1;\n\n//.... First Panel ....//\n\nglobal proc HardenEdge()\n{\n    SoftPolyEdgeElements 0;\n}\nglobal proc SoftenEdge()\n{\n    SoftPolyEdgeElements 1;\n}\nglobal proc SetFace()\n{\n    polySetToFaceNormal;\n}\n\nglobal proc UnlockNormals()\n{\n    polyNormalPerVertex -ufn true;\n}\n\n\n\n//.... Second Panel ....//\n\nglobal proc CHgon()\n{\n    polyCleanupArgList 4 { \"0\",\"2\",\"1\",\"0\",\"1\",\"0\",\"0\",\"0\",\"0\",\"1e-05\",\"0\",\"1e-05\",\"0\",\"1e-05\",\"0\",\"-1\",\"0\",\"0\" };\n}\nglobal proc CNgon()\n{\n    polyCleanupArgList 4 { \"0\",\"1\",\"1\",\"0\",\"1\",\"0\",\"0\",\"0\",\"0\",\"1e-05\",\"0\",\"1e-05\",\"0\",\"1e-05\",\"0\",\"-1\",\"0\",\"0\" };\n}\nglobal proc PQuad()\n{\n    polyPerformAction \"polyQuad  -a 30 -kgb 1 -ktb 1 -khe 0 -ws 1\" f 0;\n}\nglobal proc CPivot()\n{\n    CenterPivot;\n}\nglobal proc DHist()\n{\n    DeleteAllHistory;\n}\nglobal proc FTran()\n{\n    FreezeTransformations;\n}\n\n\n//.... third panel ....//\n\nglobal proc planar()\n{\n    scale -cs -ls -r 0 1 1;\n}\nglobal proc pwo()\n{\n    xform -ws -a -piv 0 0 0;\n}\nglobal proc PBot()\n{\nstring $sel[]= `ls -sl`;\n\n    //$sel[0] != \"\" to check if the first item is empty, but `size $sel` == 1 already cover that\n    if(`size $sel` > 0)\n    {\n        int $vtxIdx;\n        int $vCount[];\n        float $lowestY = 2147483647.0;\n        float  $crtY = 0.0;\n        float $pos[];\n\n        string $item;\n        for ($item in $sel)\n        {\n            $vCount = `polyEvaluate -vertex $item`; //Get vertex count\n            for ($vtxIdx = 0; $vtxIdx < $vCount[0]; $vtxIdx++)//Loop through vetex\n            {\n                $pos = `xform -q -ws -t ($item+\".vtx[\"+$vtxIdx+\"]\")`;//Get vertex position\n                $crtY = $pos[1];\n                if($crtY < $lowestY)\n                {\n                    $lowestY = $crtY;//Get the lowest Y\n                }\n            }\n            $pos = `xform -q -ws -t ($item)`;\n            xform -ws -a -piv $pos[0] $lowestY $pos[2] ($item);\n            print ($lowestY);\n        }\n\n    }\n}\n\nshowWindow myWindow;" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    separator
+        -enable 1
+        -width 12
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -style "shelf" 
+        -horizontal 0
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 1
+        -flexibleWidthValue 32
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Automatically soften/harden edges based on face angle" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Harden Edge" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Harden Edge" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "polyHardEdge.png" 
+        -image1 "polyHardEdge.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "SoftPolyEdgeElements 0" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 1
+        -flexibleWidthValue 32
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Automatically soften/harden edges based on face angle" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Soften Edge" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Soften Edge" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "polySoftEdge.png" 
+        -image1 "polySoftEdge.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "SoftPolyEdgeElements 1" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 1
+        -flexibleWidthValue 32
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Automatically soften/harden edges based on face angle" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Soften/Harden Edges" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Soft/Hard Edge" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "polySoftEdge.png" 
+        -image1 "polySoftEdge.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "PolygonSoftenHarden" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 1
+        -flexibleWidthValue 32
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Set the normals of selected vertices or vertex-faces to their face normals and unshare them" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Set to Face" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "SetFace" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "polyNormalSetToFace.png" 
+        -image1 "polyNormalSetToFace.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "polySetToFaceNormal " 
+        -sourceType "mel" 
+        -doubleClickCommand "SetToFaceNormalsOptions" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 1
+        -flexibleWidthValue 32
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Unlock the Vertex normals" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Unlock Normals" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "UnlockNormals" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "polyNormalUnlock.png" 
+        -image1 "polyNormalUnlock.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "polyNormalPerVertex -ufn true" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    separator
+        -enable 1
+        -width 12
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -style "shelf" 
+        -horizontal 0
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 1
+        -flexibleWidthValue 32
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Cleanup options" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Cleanup..." 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "NgonCheck" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "polyCleanup.png" 
+        -image1 "polyCleanup.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "polyCleanupArgList 4 { \"0\",\"2\",\"1\",\"0\",\"1\",\"0\",\"0\",\"0\",\"0\",\"1e-05\",\"0\",\"1e-05\",\"0\",\"1e-05\",\"0\",\"-1\",\"0\",\"0\" };" 
+        -sourceType "mel" 
+        -doubleClickCommand "performPolyCleanup 1" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 1
+        -flexibleWidthValue 32
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Cleanup options" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Cleanup..." 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Cleanup" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "polyCleanup.png" 
+        -image1 "polyCleanup.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "polyCleanupArgList 4 { \"0\",\"1\",\"1\",\"0\",\"1\",\"0\",\"0\",\"0\",\"0\",\"1e-05\",\"0\",\"1e-05\",\"0\",\"1e-05\",\"0\",\"-1\",\"0\",\"0\" };" 
+        -sourceType "mel" 
+        -doubleClickCommand "performPolyCleanup 1" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 1
+        -flexibleWidthValue 32
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Change the selected faces into quadrilaterals" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Quadrangulate" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Quadrangulate" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "polyQuad.png" 
+        -image1 "polyQuad.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "polyPerformAction \"polyQuad  -a 30 -kgb 1 -ktb 1 -khe 1 -ws 1\" f 0" 
+        -sourceType "mel" 
+        -doubleClickCommand "performPolyQuadrangulate 1" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    separator
+        -enable 1
+        -width 12
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -style "shelf" 
+        -horizontal 0
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 1
+        -flexibleWidthValue 32
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Select an object(s)" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Center Pivot" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "CenterPivot.png" 
+        -image1 "CenterPivot.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "CenterPivot" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 1
+        -flexibleWidthValue 32
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "Delete history on all objects" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "History" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "DeleteHistory.png" 
+        -image1 "DeleteHistory.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "DeleteAllHistory" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 1
+        -flexibleWidthValue 32
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "User Script" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "User Script" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "FreezeTransform.png" 
+        -image1 "FreezeTransform.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "FreezeTransformations" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    separator
+        -enable 1
+        -width 12
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -style "shelf" 
+        -horizontal 0
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 1
+        -flexibleWidthValue 32
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "User Script" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "User Script" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "planar" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "scale -cs -ls -r 0 1 1;" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 1
+        -flexibleWidthValue 32
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "User Script" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "User Script" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "PWO" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "xform -ws -a -piv 0 0 0;" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 1
+        -flexibleWidthValue 32
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "User Script" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "User Script" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "PBottom" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "selection = cmds.ls(sl=1)\n\nif selection == []:\n\tcmds.warning(\"selection is empty\")\n\n#multiple selection\nfor selected in selection:\n\n    #center pivot\n    cmds.xform(selected, cp=1)\n    \n    #move pivot to bottom\n    bounding_box = cmds.xform(selected, q=1, bb=1, ws=1)\n    \n    x_min, y_min, z_min, x_max, y_max, z_max = bounding_box\n    \n    cmds.move(y_min, [ selected+'.scalePivot', selected+'.rotatePivot' ], y=1, absolute=1)\n    \n    #move pivot to the center of grid\n    cmds.move(y_min*-1, selected, r=1, y=1)" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    separator
+        -enable 1
+        -width 12
+        -height 35
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -style "shelf" 
+        -horizontal 0
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 1
+        -flexibleWidthValue 32
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "if (`window -exists circularArrayUI`) {\n    deleteUI circularArrayUI;\n}\n\n// Define the UI window\nwindow -title \"Circular Array\" -resizeToFitChildren true circularArrayUI;\ncolumnLayout -adjustableColumn true circularArrayLayout;\ntext -label \"Number of Copies:\" -align \"left\" -height 30;\nintSliderGrp -field true -minValue 1 -maxValue 20 -value 4 countSlider;\ntext -label \"Radius:\" -align \"left\" -height 30;\nfloatSliderGrp -field true -minValue 1.0 -maxValue 10.0 -value 2.0 radiusSlider;\nbutton -label \"Create\" -height 40 -command \"circularArray\";\nsetParent ..;\nshowWindow circularArrayUI;\n\n// Define the function to create the circular array\nglobal proc circularArray() {\n    int $count = `intSliderGrp -q -value countSlider`;\n    float $radius = `floatSliderGrp -q -value radiusSlider`;\n    string $selected[] = `ls -selection`;\n    int $size = size($selected);\n    if ($size > 0) {\n        float $angle = 360.0 / $count;\n        float $startAngle = 0.0;\n        for ($i=0; $i<$count; $i++) {\n            float $x = $radius * cos(deg_to_rad($startAngle));\n            float $z = $radius * sin(deg_to_rad($startAngle));\n            string $newObj[] = `duplicate $selected[0]`;\n            move $x 0 $z $newObj;\n            rotate 0 ($angle * $i) 0 $newObj;\n            select -add $newObj;\n            $startAngle += $angle;\n        }\n        select -d $selected;\n    }\n    else {\n        warning \"Please select at least one object.\";\n    }\n}\n" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "ExtraWiz" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Witczer's Extra Tools" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "if (`window -exists circularArrayUI`) {\n    deleteUI circularArrayUI;\n}\n\n// Define the UI window\nwindow -title \"Extra ToolWiz v.1.0\" -resizeToFitChildren true -backgroundColor 0.15 0.15 0.15 circularArrayUI;\n\nframeLayout -label \"Radial Array\" -bs \"etchedIn\" -cll 1 -cl 0 -backgroundColor 0.5 0.25 0.65;\ncolumnLayout -adjustableColumn true circularArrayLayout;\ntext -label \"Number of Copies:\" -align \"left\" -height 30;\nintSliderGrp -field true -minValue 1 -maxValue 20 -value 4 countSlider;\ntext -label \"Radius:\" -align \"left\" -height 30;\nfloatSliderGrp -field true -minValue 1.0 -maxValue 10.0 -value 2.0 radiusSlider;\niconTextButton -style \"textOnly\" -label \"Create\" -height 40 -backgroundColor 0.5 0.25 0.65 -command \"circularArray\" ;\nsetParent ..;\nshowWindow circularArrayUI;\n\n// Define the function to create the circular array\nglobal proc circularArray() {\n    int $count = `intSliderGrp -q -value countSlider`;\n    float $radius = `floatSliderGrp -q -value radiusSlider`;\n    string $selected[] = `ls -selection`;\n    int $size = size($selected);\n    if ($size > 0) {\n        float $angle = 360.0 / $count;\n        float $startAngle = 0.0;\n        for ($i=0; $i<$count; $i++) {\n            float $x = $radius * cos(deg_to_rad($startAngle));\n            float $z = $radius * sin(deg_to_rad($startAngle));\n            string $newObj[] = `duplicate $selected[0]`;\n            move $x 0 $z $newObj;\n            rotate 0 ($angle * $i) 0 $newObj;\n            select -add $newObj;\n            $startAngle += $angle;\n        }\n        select -d $selected;\n    }\n    else {\n        warning \"Please select at least one object.\";\n    }\n}\n" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 1
+        -flexibleWidthValue 32
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "import maya.cmds as cmds\n\nclass DistanceUI():\n\n    def __init__(self):\n        self.window = 'DistanceUIWindow'\n        self.title = 'Distance Tool'\n        self.size = (400, 150)\n\n    def create(self):\n        if cmds.window(self.window, exists=True):\n            cmds.deleteUI(self.window)\n\n        self.window = cmds.window(self.window, title=self.title, widthHeight=self.size)\n\n        self.column = cmds.columnLayout(parent=self.window, adjustableColumn=True)\n\n        cmds.text(label='Select two vertices to measure distance:', parent=self.column, align='center')\n\n        self.vertex_1_field = cmds.textField(parent=self.column, placeholderText='Vertex 1', editable=False)\n        self.vertex_2_field = cmds.textField(parent=self.column, placeholderText='Vertex 2', editable=False)\n\n        cmds.button(label='Select Vertex 1', parent=self.column, command=lambda *args: self.select_vertex(1))\n        cmds.button(label='Select Vertex 2', parent=self.column, command=lambda *args: self.select_vertex(2))\n\n        cmds.separator(parent=self.column, height=10, style='none')\n\n        self.distance_text = cmds.text(parent=self.column, label='', font='boldLabelFont', align='center')\n\n        cmds.button(label='Clear', parent=self.column, command=lambda *args: self.clear())\n\n        cmds.showWindow(self.window)\n\n    def select_vertex(self, vertex_number):\n        sel = cmds.ls(selection=True, flatten=True)\n        if len(sel) != 1:\n            cmds.warning('Please select one vertex.')\n            return\n\n        if vertex_number == 1:\n            cmds.textField(self.vertex_1_field, edit=True, text=sel[0])\n        else:\n            cmds.textField(self.vertex_2_field, edit=True, text=sel[0])\n\n        self.calculate_distance()\n\n    def calculate_distance(self):\n        vertex_1 = cmds.textField(self.vertex_1_field, query=True, text=True)\n        vertex_2 = cmds.textField(self.vertex_2_field, query=True, text=True)\n\n        if not vertex_1 or not vertex_2:\n            return\n\n        v1_position = cmds.xform(vertex_1, query=True, worldSpace=True, translation=True)\n        v2_position = cmds.xform(vertex_2, query=True, worldSpace=True, translation=True)\n\n        distance = round(((v2_position[0]-v1_position[0])**2 + (v2_position[1]-v1_position[1])**2 + (v2_position[2]-v1_position[2])**2)**0.5, 3)\n\n        unit = cmds.currentUnit(query=True, linear=True)\n\n        cmds.text(self.distance_text, edit=True, label='Distance: {} {}'.format(distance, unit))\n\n    def clear(self):\n        cmds.textField(self.vertex_1_field, edit=True, text='')\n        cmds.textField(self.vertex_2_field, edit=True, text='')\n        cmds.text(self.distance_text, edit=True, label='')\n\nDistanceUI().create()\n" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "DistanceWiz" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "Distance verts" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "pythonFamily.png" 
+        -image1 "pythonFamily.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "import maya.cmds as cmds\n\nclass DistanceUI():\n\n    def __init__(self):\n        self.window = 'DistanceUIWindow'\n        self.title = 'DistanceWiz v.1.0'\n        self.size = (300, 200)\n\n    def create(self):\n        if cmds.window(self.window, exists=True):\n            cmds.deleteUI(self.window)\n\n        self.window = cmds.window(self.window, title=self.title, widthHeight=self.size)\n\n        self.column = cmds.columnLayout(parent=self.window, adjustableColumn=True, bgc=[0.15,0.15,0.15])\n\n        cmds.text(label='Select two vertices to measure distance:', parent=self.column, align='center', bgc=[0.15,0.15,0.15])\n\n        self.vertex_1_field = cmds.textField(parent=self.column, placeholderText='Vertex 1', editable=False, bgc=[0.15,0.15,0.15],font=\"boldLabelFont\")\n        self.vertex_2_field = cmds.textField(parent=self.column, placeholderText='Vertex 2', editable=False, bgc=[0.15,0.15,0.15],font=\"boldLabelFont\")\n        cmds.button(label='Select Vertex 1', parent=self.column, command=lambda *args: self.select_vertex(1),bgc=[0.5,0.25,0.65])\n        cmds.button(label='Select Vertex 2', parent=self.column, command=lambda *args: self.select_vertex(2),bgc=[0.5,0.25,0.65])\n\n        cmds.separator(parent=self.column, height=10, style='none')\n\n        self.distance_text = cmds.text(parent=self.column, label='', font='boldLabelFont', align='center')\n\n        cmds.button(label='Clear', parent=self.column, command=lambda *args: self.clear())\n\n        cmds.showWindow(self.window)\n\n    def select_vertex(self, vertex_number):\n        sel = cmds.ls(selection=True, flatten=True)\n        if len(sel) != 1:\n            cmds.warning('Please select one vertex.')\n            return\n\n        if vertex_number == 1:\n            cmds.textField(self.vertex_1_field, edit=True, text=sel[0])\n        else:\n            cmds.textField(self.vertex_2_field, edit=True, text=sel[0])\n\n        self.calculate_distance()\n\n    def calculate_distance(self):\n        vertex_1 = cmds.textField(self.vertex_1_field, query=True, text=True)\n        vertex_2 = cmds.textField(self.vertex_2_field, query=True, text=True)\n\n        if not vertex_1 or not vertex_2:\n            return\n\n        v1_position = cmds.xform(vertex_1, query=True, worldSpace=True, translation=True)\n        v2_position = cmds.xform(vertex_2, query=True, worldSpace=True, translation=True)\n\n        distance = round(((v2_position[0]-v1_position[0])**2 + (v2_position[1]-v1_position[1])**2 + (v2_position[2]-v1_position[2])**2)**0.5, 3)\n\n        unit = cmds.currentUnit(query=True, linear=True)\n\n        cmds.text(self.distance_text, edit=True, label='Distance: {} {}'.format(distance, unit))\n\n    def clear(self):\n        cmds.textField(self.vertex_1_field, edit=True, text='')\n        cmds.textField(self.vertex_2_field, edit=True, text='')\n        cmds.text(self.distance_text, edit=True, label='')\n\nDistanceUI().create()" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 1
+        -flexibleWidthValue 32
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "import maya.cmds as cmds\nimport os\n\nclass FileManagementUI():\n    def __init__(self):\n        self.window_name = \"file_management_ui\"\n        \n        if cmds.window(self.window_name, exists=True):\n            cmds.deleteUI(self.window_name)\n        \n        cmds.window(self.window_name, title=\"File Management UI\", widthHeight=(300, 150))\n        cmds.columnLayout(adjustableColumn=True)\n        \n        cmds.text(label=\"Open Last Opened File:\")\n        cmds.button(label=\"Open\", command=self.open_last_opened_file)\n        \n        cmds.separator(height=20, style=\"none\")\n        \n        cmds.text(label=\"Incremental Save in Same Directory:\")\n        cmds.button(label=\"Save\", command=self.incremental_save)\n        \n        cmds.showWindow()\n    \n    def open_last_opened_file(self, *args):\n        last_file = cmds.file(q=True, l=True)[0]\n        cmds.file(last_file, o=True)\n    \n    def incremental_save(self, *args):\n        current_file = cmds.file(q=True, sn=True)\n        if current_file:\n            if cmds.file(q=True, modified=True):\n                cmds.confirmDialog(title=\"Save Changes\", message=\"Save changes to \" + current_file + \"?\", button=[\"Save\", \"Cancel\"], defaultButton=\"Save\", cancelButton=\"Cancel\", dismissString=\"Cancel\")\n                if cmds.confirmDialog(query=True, button=True) == \"Save\":\n                    cmds.file(save=True)\n                else:\n                    return\n                \n        dir_path = os.path.dirname(current_file)\n        file_name, ext = os.path.splitext(os.path.basename(current_file))\n        incremental_file_path = os.path.join(dir_path, file_name + \"_v001\" + ext)\n        \n        version = 1\n        while os.path.exists(incremental_file_path):\n            version += 1\n            incremental_file_path = os.path.join(dir_path, file_name + \"_v\" + str(version).zfill(3) + ext)\n            \n        cmds.file(rename=incremental_file_path)\n        cmds.file(save=True, type=\"mayaBinary\")\n\n    \nFileManagementUI()\n" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "FileWiz" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "FM" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "pythonFamily.png" 
+        -image1 "pythonFamily.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "import maya.mel as mel\nimport maya.cmds as cmds\nimport os\n\nclass MayaFileManagerUI():\n    def __init__(self):\n        self.window_name = \"FileWiz v.1.0\"\n        \n    def open_last_file(self, *args):\n        current_file = cmds.file(q=True, sn=True)\n        if current_file:\n            if cmds.file(q=True, modified=True):\n                cmds.confirmDialog(title=\"Save Changes\", message=\"Save changes to \" + current_file + \"?\", button=[\"Save\", \"Cancel\"], defaultButton=\"Save\", cancelButton=\"Cancel\", dismissString=\"Cancel\")\n                if cmds.confirmDialog(query=True, button=True) == \"Save\":\n                    cmds.file(save=True)\n                else:\n                    return\n\n        recent_files = cmds.optionVar(q=\"RecentFilesList\")\n        last_file = None\n        for file in reversed(recent_files):\n            if os.path.exists(file):\n                last_file = file\n                break\n    \n        if last_file:\n            cmds.file(last_file, open=True, force=True)\n        else:\n            cmds.warning(\"Could not find last opened file.\")\n\n            \n    def incremental_save(self, *args):\n        current_file = cmds.file(q=True, sn=True)\n        if current_file:\n            if cmds.file(q=True, modified=True):\n                cmds.file(save=True)\n        \n            path, ext = os.path.splitext(current_file)\n            i = 1\n            while True:\n                new_file = path + \"_v\" + str(i).zfill(3) + ext\n                if os.path.exists(new_file):\n                    i += 1\n                else:\n                    cmds.file(rename=new_file)\n                    cmds.file(save=True)\n                    break\n\n    \n\n                    \n    def create_ui(self):\n        if cmds.window(self.window_name, exists=True):\n            cmds.deleteUI(self.window_name)\n    \n        window = cmds.window(self.window_name, title=\"Maya File Manager\", widthHeight=(300, 200))\n        cmds.columnLayout(adjustableColumn=True, bgc=[0.15,0.15,0.15])\n    \n        cmds.separator(height=10)\n    \n        cmds.rowLayout(numberOfColumns=2, columnWidth2=[130,130])\n        cmds.text(label=\"Open Last Opened File\", align=\"left\", bgc=[0.15,0.15,0.15], fn=\"boldLabelFont\")\n        cmds.button(label=\"Open\", command=self.open_last_file, bgc=[0.5,0.25,0.65], ann=\"Open the last opened file\")\n        cmds.setParent(\"..\")\n        cmds.separator(height=10)\n    \n        cmds.rowLayout(numberOfColumns=2, columnWidth2=[130,130])\n        cmds.text(label=\"Incremental Save\", align=\"left\", bgc=[0.15,0.15,0.15], fn=\"boldLabelFont\")\n        cmds.button(label=\"Save\", command=self.incremental_save, bgc=[0.5,0.25,0.65], ann=\"Incrementally save the current file\", hlc=[1,1,1])\n        cmds.setParent(\"..\")\n        cmds.separator(height=10)\n        \n        \n        \n        cmds.showWindow(window)\n\n        \nui = MayaFileManagerUI()\nui.create_ui()\n" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 1
+        -flexibleWidthValue 32
+        -enable 1
+        -width 34
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "import maya.cmds as cmds\n\nclass RelativeTransformUI():\n\n    def __init__(self):\n        self.win = 'RelativeTransformUI'\n        self.title = 'Relative Transform'\n        self.width = 200\n        self.height = 100\n        \n    def createUI(self):\n        if cmds.window(self.win, exists=True):\n            cmds.deleteUI(self.win)\n        cmds.window(self.win, title=self.title, width=self.width, height=self.height)\n        \n        cmds.columnLayout(adjustableColumn=True)\n        cmds.text(label='Relative Transform')\n        cmds.separator(height=10, style='single')\n        \n        cmds.rowLayout(numberOfColumns=2, columnWidth2=(100, 100))\n        cmds.text(label='X:', align='right')\n        self.xField = cmds.floatField(value=0.0)\n        cmds.setParent('..')\n        \n        cmds.rowLayout(numberOfColumns=2, columnWidth2=(100, 100))\n        cmds.text(label='Y:', align='right')\n        self.yField = cmds.floatField(value=0.0)\n        cmds.setParent('..')\n        \n        cmds.rowLayout(numberOfColumns=2, columnWidth2=(100, 100))\n        cmds.text(label='Z:', align='right')\n        self.zField = cmds.floatField(value=0.0)\n        cmds.setParent('..')\n        \n        cmds.separator(height=10, style='single')\n        \n        cmds.button(label='Apply', command=self.apply)\n        \n        cmds.showWindow(self.win)\n        \n    def apply(self, *args):\n        selection = cmds.ls(selection=True)\n        if not selection:\n            cmds.warning('Nothing is selected!')\n            return\n        \n        x = cmds.floatField(self.xField, query=True, value=True)\n        y = cmds.floatField(self.yField, query=True, value=True)\n        z = cmds.floatField(self.zField, query=True, value=True)\n        \n        for obj in selection:\n            cmds.move(x, y, z, obj, relative=True)\n        \nui = RelativeTransformUI()\nui.createUI()\n" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "TransformWiz" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "RT" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "pythonFamily.png" 
+        -image1 "pythonFamily.png" 
+        -style "iconOnly" 
+        -marginWidth 1
+        -marginHeight 1
+        -command "import maya.cmds as cmds\n\nclass RelativeTransformUI():\n\n    def __init__(self):\n        self.win = 'RelativeTransformUI'\n        self.title = 'TransformWiz v.1.0'\n        self.width = 300\n        self.height = 200\n        \n    def createUI(self):\n        if cmds.window(self.win, exists=True):\n            cmds.deleteUI(self.win)\n        cmds.window(self.win, title=self.title, width=self.width, height=self.height)\n        \n        cmds.columnLayout(adjustableColumn=True, bgc=[0.15,0.15,0.15])\n        cmds.text(label='Relative Transform', bgc=[0.15,0.15,0.15], fn=\"boldLabelFont\")\n        cmds.separator(height=10, style='single')\n        \n        cmds.rowLayout(numberOfColumns=2, columnWidth2=(100, 100))\n        cmds.text(label='X:', align='right', bgc=[0.15,0.15,0.15], fn=\"boldLabelFont\")\n        self.xField = cmds.floatField(value=0.0)\n        cmds.setParent('..')\n        \n        cmds.rowLayout(numberOfColumns=2, columnWidth2=(100, 100))\n        cmds.text(label='Y:', align='right', bgc=[0.15,0.15,0.15], fn=\"boldLabelFont\")\n        self.yField = cmds.floatField(value=0.0)\n        cmds.setParent('..')\n        \n        cmds.rowLayout(numberOfColumns=2, columnWidth2=(100, 100))\n        cmds.text(label='Z:', align='right', bgc=[0.15,0.15,0.15], fn=\"boldLabelFont\")\n        self.zField = cmds.floatField(value=0.0)\n        cmds.setParent('..')\n        \n        cmds.separator(height=10, style='single')\n        \n        cmds.button(label='Apply', command=self.apply, bgc=[0.5,0.25,0.65])\n        \n        cmds.showWindow(self.win)\n        \n    def apply(self, *args):\n        selection = cmds.ls(selection=True)\n        if not selection:\n            cmds.warning('Nothing is selected!')\n            return\n        \n        x = cmds.floatField(self.xField, query=True, value=True)\n        y = cmds.floatField(self.yField, query=True, value=True)\n        z = cmds.floatField(self.zField, query=True, value=True)\n        \n        for obj in selection:\n            cmds.move(x, y, z, obj, relative=True)\n        \nui = RelativeTransformUI()\nui.createUI()\n" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+
+} 
